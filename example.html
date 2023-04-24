@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<title>Cursor fluido en campo de texto</title>
+</head>
+<body>
+	<script>
+		function getCaretCoordinates() {
+			let x = 0,
+			y = 0;
+			const isSupported = typeof window.getSelection !== "undefined";
+			if (isSupported) {
+				const selection = window.getSelection();
+				if (selection.rangeCount !== 0) {
+					const range = selection.getRangeAt(0).cloneRange();
+					range.collapse(true);
+					const rect = range.getClientRects()[0];
+					if (rect) {
+        x = rect.left; 
+        y = rect.top;
+    }
+}
+}
+return { x, y };
+}
+
+function getCaretIndex(element) {
+	let position = 0;
+	const isSupported = typeof window.getSelection !== "undefined";
+	if (isSupported) {
+		const selection = window.getSelection();
+		if (selection.rangeCount !== 0) {
+			const range = window.getSelection().getRangeAt(0);
+			const preCaretRange = range.cloneRange();
+			preCaretRange.selectNodeContents(element);
+			preCaretRange.setEnd(range.endContainer, range.endOffset);
+			position = preCaretRange.toString().length;
+		}
+
+	}
+	return position;
+}
+
+
+
+
+$(document).ready(function(){
+	$("#cc").hide();
+
+	$(".texto").on("click keydown keypress keyup", function(e) {
+		$("#cc").hide();
+		var posX = getCaretCoordinates().x;
+		var posY = getCaretCoordinates().y;
+		var arregloX = posX + 1;
+		if (posX > 1 || posY > 1) {
+			$("#cc").show().css({
+				top: posY + "px",
+				left: arregloX + "px",
+			});
+		} else {
+			$("#cc").hide();
+		}
+		
+	}).on("blur", function(e) {
+		$("#cc").hide();
+	});
+
+});
+</script>
+
+
+
+<div class="texto" contenteditable="true" style="font-size: 16px; caret-color: transparent; border: 1px #323232 solid; border-radius: 8px; padding: 20px; line-height: 1.2;">
+	
+	Hello World! Press here and test to Write!
+
+</div>
+
+<div class="texto" contenteditable="true" style="margin-top: 20px;font-size: 16px; caret-color: transparent; border: 1px #323232 solid; border-radius: 8px; padding: 20px; line-height: 1.2;">
+	
+	Hello World! Press here and test to Write!
+
+</div>
+<div id="cc"></div>
+<style>
+	#cc {
+		width: 2px; height: 16px; background: #282828; position: absolute; top: 0; left: 0; transition: 100ms;
+		 transition-timing-function: ease-out;
+		  display: inline; border-radius: 8px;
+		 animation-duration: 500ms;
+  animation-name: parpadear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+
+	}
+@keyframes parpadear {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+</style>
+
+</body>
+</html>
