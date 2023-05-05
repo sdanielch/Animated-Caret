@@ -5,6 +5,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 	<title>Cursor fluido en campo de texto</title>
+	<style>
+		html,body {
+			background: #FFF;
+			color: #282828;
+			font-size: 16px;
+		}
+	</style>
 </head>
 <body>
 	<script>
@@ -73,13 +80,19 @@ $(document).ready(function(){
 
 
 
-<div class="texto" contenteditable="true" style="font-size: 16px; caret-color: transparent; border: 1px #323232 solid; border-radius: 8px; padding: 20px; line-height: 1.2;">
+<div class="texto" contenteditable="true" style="
+font-size: 16px; caret-color: transparent;
+ border: 1px #323232 solid; border-radius: 8px; padding: 20px; 
+ line-height: 1.5;">
 	
 	Hello World! Press here and test to Write!
 
 </div>
 
-<div class="texto" contenteditable="true" style="margin-top: 20px;font-size: 16px; caret-color: transparent; border: 1px #323232 solid; border-radius: 8px; padding: 20px; line-height: 1.2;">
+<div class="texto" contenteditable="true" style="
+font-size: 16px; caret-color: transparent;
+ border: 1px #323232 solid; border-radius: 8px; padding: 20px; 
+ line-height: 1.5;">
 	
 	Hello World! Press here and test to Write!
 
@@ -87,24 +100,33 @@ $(document).ready(function(){
 <div id="cc"></div>
 <style>
 	#cc {
-		width: 2px; height: 16px; background: #282828; position: absolute; top: 0; left: 0; transition: 100ms;
+		width: 1em; height: calc(1em + 1px);
+		background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,1) 1%, rgba(2,0,36,1) 4%, rgba(0,0,0,1) 12%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 100%);
+		  position: absolute; top: 1px; left: 0;
+		   transition: 100ms;
 		 transition-timing-function: ease-out;
-		  display: inline; border-radius: 8px;
+		  display: inline; border-radius: 2px;
 		 animation-duration: 500ms;
   animation-name: parpadear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+  backdrop-filter: blur(16px);
+  z-index: 8500;
 
 	}
 @keyframes parpadear {
   from {
     opacity: 1;
+	backdrop-filter: blur(16px);
   }
 
   to {
     opacity: 0;
+	backdrop-filter: blur(16px);
   }
 }
+
 </style>
 
 </body>
